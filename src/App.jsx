@@ -21,7 +21,7 @@ function App() {
   }, []);
 
   const progress = useMemo(() => {
-    return drinked / total;
+    return drinked / total || 0;
   }, [drinked, total]);
 
   const filteredData = useMemo(() => {
@@ -45,7 +45,7 @@ function App() {
     return (
       <div className='toolbar'>
         <h1>
-          Алко‑карта 🍸{drinked} / {total}{' '}
+          Алко‑карта 🍸{drinked} / {total || 0}
         </h1>
 
         <div className='controls'>

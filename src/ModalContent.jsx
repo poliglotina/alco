@@ -27,7 +27,7 @@ const CardModal = ({ item, handleSave, handleClose }) => {
             layout='vertical'
             style={{ textAlign: 'center' }}
           >
-            <Rate style={{ fontSize: 40, width: '100%' }} count={10} />
+            <Rate style={{ width: '100%' }} count={10} className='modal-rate' />
           </Form.Item>
           <Form.Item name='comment' layout='vertical'>
             <Input.TextArea
