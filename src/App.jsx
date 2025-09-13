@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 import './App.css';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import DrinkCard from './DrinkCard.jsx';
-import { Spin } from 'antd';
+import { Input, Select, Spin } from 'antd';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -49,7 +49,7 @@ function App() {
         </h1>
 
         <div className='controls'>
-          <input
+          <Input
             type='text'
             placeholder='Поиск напитков...'
             value={searchTerm}
@@ -57,18 +57,18 @@ function App() {
             className='search-input'
           />
 
-          <select
+          <Select
             value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
+            onChange={(e) => setSelectedCategory(e)}
             className='category-select'
-          >
-            <option value='all'>Все категории</option>
-            {drinksData.map((group) => (
-              <option key={group.groupName} value={group.groupName}>
-                {group.groupName}
-              </option>
-            ))}
-          </select>
+            options={[
+              { value: 'all', label: 'Все категории' },
+              ...drinksData.map((group) => ({
+                value: group.groupName,
+                label: group.groupName,
+              })),
+            ]}
+          />
         </div>
 
         <div className='progress'>
