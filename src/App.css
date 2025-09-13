@@ -177,13 +177,10 @@ body {
 }
 
 .modal-rate {
-  font-size: 40px;
+  font-size: 2em;
 }
 
 @media (max-width: 768px) {
-  .modal-rate {
-    font-size: 30px;
-  }
   .wrap {
     padding: 10px;
   }
