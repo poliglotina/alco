@@ -79,8 +79,9 @@ const drinks = {
           .from(STORAGE_NAME)
           .getPublicUrl(filePath);
         dataToSave.photo_url = data.publicUrl;
-        delete dataToSave.file;
       }
+      delete dataToSave.file;
+      dataToSave.rate = dataToSave.rate || 0;
       await supabase
         .from('drinks')
         .update(dataToSave)

@@ -97,12 +97,6 @@ body {
   flex-direction: column;
 }
 
-.cell:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  border-color: #667eea;
-}
-
 .cell.tried {
   border-color: #4caf50;
   background: linear-gradient(135deg, #f8fffe 0%, #e8f5e8 100%);

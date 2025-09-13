@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { Modal, Input, Form, Rate, Image, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import { useStoreState } from 'easy-peasy';
 
 const CardModal = ({ item, handleSave, handleClose }) => {
   const [form] = Form.useForm();
   const [file, setFile] = useState(null);
+  const { loading } = useStoreState((store) => store.drinks);
   const handleOk = () => {
     handleSave({ ...form.getFieldsValue(), file });
   };
@@ -16,9 +18,15 @@ const CardModal = ({ item, handleSave, handleClose }) => {
       title={item.name}
       closable={{ 'aria-label': 'Custom Close Button' }}
       open={true}
-      onOk={handleOk}
       onCancel={handleClose}
-      okText={'Сохранить'}
+      footer={[
+        <Button key='close' onClick={handleClose}>
+          Закрыть
+        </Button>,
+        <Button type='primary' key='save' onClick={handleOk} loading={loading}>
+          Сохранить
+        </Button>,
+      ]}
     >
       <div className='card-modal-container'>
         <Form

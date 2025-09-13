@@ -58,8 +58,8 @@ const DrinkCard = ({ item }) => {
           handleClose={() => {
             setOpenModal(false);
           }}
-          handleSave={(data) => {
-            tryDrink({
+          handleSave={async (data) => {
+            await tryDrink({
               ...data,
               id: item.id,
               tried_date: new Date(),
