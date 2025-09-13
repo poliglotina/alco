@@ -62,13 +62,30 @@ const drinks = {
 
   tryDrink: thunk(async (actions, payload) => {
     actions.setLoading(true);
+    const dataToSave = { ...payload };
+    const STORAGE_NAME = 'alco-map-photos';
     try {
+      if (dataToSave.file?.name) {
+        const filePath = `${dataToSave.id}/${Date.now()}-${
+          dataToSave.file.name
+        }`;
+        const { error } = await supabase.storage
+          .from(STORAGE_NAME)
+          .upload(filePath, dataToSave.file);
+
+        if (error) throw error;
+
+        const { data } = supabase.storage
+          .from(STORAGE_NAME)
+          .getPublicUrl(filePath);
+        dataToSave.photo_url = data.publicUrl;
+        delete dataToSave.file;
+      }
       await supabase
         .from('drinks')
-        .update(payload)
-        .eq('id', payload.id)
+        .update(dataToSave)
+        .eq('id', dataToSave.id)
         .select();
-
       actions.fetchDrinks();
     } catch (e) {
       console.log(e);

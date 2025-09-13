@@ -1,11 +1,16 @@
-import React from 'react';
-import { Modal, Input, Form, Rate } from 'antd';
+import React, { useState, useRef } from 'react';
+import { Modal, Input, Form, Rate, Image, Button } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 
 const CardModal = ({ item, handleSave, handleClose }) => {
   const [form] = Form.useForm();
+  const [file, setFile] = useState(null);
   const handleOk = () => {
-    handleSave(form.getFieldsValue());
+    handleSave({ ...form.getFieldsValue(), file });
   };
+
+  const fileInputRef = useRef();
+
   return (
     <Modal
       title={item.name}
@@ -36,6 +41,32 @@ const CardModal = ({ item, handleSave, handleClose }) => {
             />
           </Form.Item>
         </Form>
+
+        <label>
+          <input
+            type='file'
+            accept='image/*'
+            style={{ display: 'none' }}
+            onChange={(e) => setFile(e.target.files[0])}
+            ref={fileInputRef}
+          />
+          {!item.photo_url && (
+            <Button
+              icon={<UploadOutlined />}
+              onClick={() => {
+                fileInputRef.current?.click();
+              }}
+            >
+              Выбрать фото
+            </Button>
+          )}
+          {file?.name || ''}
+        </label>
+        {item.photo_url && (
+          <div style={{ textAlign: 'center' }}>
+            <Image width={200} src={item.photo_url} />
+          </div>
+        )}
       </div>
     </Modal>
   );
